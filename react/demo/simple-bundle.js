@@ -26429,9 +26429,10 @@
     },
     usePreciseValidation = false,
     initOptions = {},
-    inputProps = {}
+    inputProps = {},
+    forwardedRef = null
   }) => {
-    const inputRef = (0, import_react.useRef)(null);
+    const inputRef = forwardedRef || (0, import_react.useRef)(null);
     const itiRef = (0, import_react.useRef)(null);
     const update = () => {
       const num = itiRef.current?.getNumber() || "";

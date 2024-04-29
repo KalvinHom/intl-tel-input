@@ -10,19 +10,21 @@ const IntlTelInput = ({
   usePreciseValidation = false,
   initOptions = {},
   inputProps = {},
+  forwardedRef = null,
 }: {
-  initialValue?: string,
-  onChangeNumber?: (number: string) => void,
-  onChangeCountry?: (country: string) => void,
-  onChangeValidity?: (valid: boolean) => void,
-  onChangeErrorCode?: (errorCode: number | null) => void,
-  usePreciseValidation?: boolean,
-  initOptions?: SomeOptions,
-  inputProps?: object,
+  initialValue?: string;
+  onChangeNumber?: (number: string) => void;
+  onChangeCountry?: (country: string) => void;
+  onChangeValidity?: (valid: boolean) => void;
+  onChangeErrorCode?: (errorCode: number | null) => void;
+  usePreciseValidation?: boolean;
+  initOptions?: SomeOptions;
+  inputProps?: object;
+  forwardedRef?: React.MutableRefObject<HTMLInputElement>;
 }) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = forwardedRef || useRef<HTMLInputElement | null>(null);
   const itiRef = useRef<Iti | null>(null);
-  
+
   const update = (): void => {
     const num = itiRef.current?.getNumber() || "";
     const countryIso = itiRef.current?.getSelectedCountryData().iso2 || "";
@@ -33,7 +35,9 @@ const IntlTelInput = ({
     onChangeCountry(countryIso);
 
     if (itiRef.current) {
-      const isValid = usePreciseValidation ? itiRef.current.isValidNumberPrecise() : itiRef.current.isValidNumber();
+      const isValid = usePreciseValidation
+        ? itiRef.current.isValidNumberPrecise()
+        : itiRef.current.isValidNumber();
       if (isValid) {
         onChangeValidity(true);
         onChangeErrorCode(null);
@@ -44,7 +48,7 @@ const IntlTelInput = ({
       }
     }
   };
-  
+
   useEffect(() => {
     // store a reference to the current input ref, which otherwise is already lost in the cleanup function
     const inputRefCurrent = inputRef.current;
@@ -54,7 +58,7 @@ const IntlTelInput = ({
         const countryIso = itiRef.current?.getSelectedCountryData().iso2 || "";
         onChangeCountry(countryIso);
         onChangeNumber(initialValue);
-      } else if(initOptions?.initialCountry) {
+      } else if (initOptions?.initialCountry) {
         onChangeCountry(initOptions.initialCountry);
       }
       inputRefCurrent.addEventListener("countrychange", update);
@@ -66,7 +70,7 @@ const IntlTelInput = ({
       itiRef.current?.destroy();
     };
   }, []);
-  
+
   return (
     <input
       type="tel"
