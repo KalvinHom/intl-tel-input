@@ -49,8 +49,9 @@ const IntlTelInput = ({
     // store a reference to the current input ref, which otherwise is already lost in the cleanup function
     const inputRefCurrent = inputRef.current;
     if (inputRefCurrent) {
-    itiRef.current = intlTelInput(inputRefCurrent, initOptions);
+   
       inputRefCurrent.addEventListener("countrychange", update);
+      itiRef.current = intlTelInput(inputRefCurrent, initOptions);
     }
     return (): void => {
       if (inputRefCurrent) {
