@@ -548,6 +548,7 @@ export class Iti {
   private rejectUtilsScriptPromise: (reason?: unknown) => void;
 
   constructor(input: HTMLInputElement, customOptions: SomeOptions = {}) {
+    console.log("constructor")
     this.id = id++;
     this.telInput = input;
 
@@ -561,6 +562,7 @@ export class Iti {
 
   //* Can't be private as it's called from intlTelInput convenience wrapper.
   _init(): void {
+    console.log("init being called");
     //* If showing fullscreen popup, do not fix the width.
     if (this.options.useFullscreenPopup) {
       this.options.fixDropdownWidth = false;
