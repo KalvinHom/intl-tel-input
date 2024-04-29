@@ -1054,10 +1054,10 @@ export class Iti {
     //* NOTE: if initialCountry is set to auto, that will be handled separately.
 
     //* Format - note this wont be run after _updateDialCode as that's only called if no val.
-    console.log("init val");
-    console.log(val)
+   
     if (val) {
       this._updateValFromNumber(val);
+      this._triggerCountryChange();
     }
   }
 
